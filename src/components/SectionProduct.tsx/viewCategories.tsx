@@ -1,24 +1,26 @@
 "use client"
-import React, { useState } from "react";
+import { productService } from "@/services/product";
 import { Listbox, ListboxItem } from "@nextui-org/react";
+import { useContext, useState } from "react";
 import { ListboxWrapper } from "../shared/ListboxWrapper";
 import { TGetDataCategory } from "@/utils/type";
-import { productService } from "@/services/product";
+import { AppContext } from "@/context/appContext";
 
-export default async function ViewCategories({onCategorieSelected}:{onCategorieSelected: (category: string) => void}) {
-    const [appState, setappState] = useState(null)
-    const handleCategoryClick = (category: any) => {
-        onCategorieSelected(category)
-    }
-    const categories = await getData();
+export default function ViewCategories({ categories }: { categories: any[] }) {
+    const { appState, setAppState } = useContext(AppContext)
+
     return (
         <ListboxWrapper>
             <Listbox
                 items={categories}
                 shouldSelectOnPressUp={false}
-                onAction={(key) => {
-                    handleCategoryClick(key)
-                    alert(appState)
+                aria-labelledby="e"
+                onAction={async (key) => {
+                    const ProductsByCategory: TGetDataCategory = await productService.getProductsByCategory({
+                        name: key as string,
+                    });
+                    setAppState(ProductsByCategory)
+                    console.log(appState)
                 }}
             >
                 {(categories) => (
@@ -37,8 +39,5 @@ export default async function ViewCategories({onCategorieSelected}:{onCategorieS
 }
 
 
-const getData = async () => {
-    const categories = await productService.getAllProdutsCategories();
-    return categories
-};
+
 

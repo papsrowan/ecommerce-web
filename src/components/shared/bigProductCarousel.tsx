@@ -1,6 +1,6 @@
-import { productService } from "@/services/product";
-import { TGetDataCategory } from "@/utils/type";
+"use client"
 import "swiper/css";
+import { TGetDataCategory } from "@/utils/type";
 import 'swiper/css/effect-fade';
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -9,9 +9,8 @@ import { Autoplay, Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from "swiper/react";
 import ProductCard from "./productCard";
 
-const BigProductCarousel = async () => {
+const BigProductCarousel = async({ productsTop }: { productsTop: TGetDataCategory }) => {
 
-    const productsTop = await getData();
     return (
         <div>
             <Swiper
@@ -38,10 +37,5 @@ const BigProductCarousel = async () => {
         </div>
     );
 };
-const getData = async () => {
-    const productsTop: TGetDataCategory = await productService.getProductsByCategory({
-        name: "tops",
-    });
-    return productsTop
-};
+
 export default BigProductCarousel;

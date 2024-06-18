@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react";
+
 type TProductCart = {
     id: number;
     quantity: number;
@@ -24,8 +26,8 @@ type TGetDataCategory = {
 }
 
 interface MyContextProps {
-    appState: string;
-    setAppState: (newCount: string) => void;
+    appState: TGetDataCategory | null;
+    setAppState: Dispatch<SetStateAction<TGetDataCategory>>
   }
 export type { TProductCart, TProduct,TGetDataCategory, MyContextProps };
 

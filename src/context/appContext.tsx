@@ -1,15 +1,20 @@
 "use client"
-import { MyContextProps } from "@/utils/type";
+import { MyContextProps, TGetDataCategory } from "@/utils/type";
 import { createContext, ReactElement, useContext, useState } from "react";
 
 
 export const AppContext = createContext<MyContextProps>({
-    appState: "",
-    setAppState: () => { }
+    appState: null,
+    setAppState: () => { },
 });
 
 export const AppProvider = ({ children }: { children: ReactElement }) => {
-    const [appState, setAppState] = useState("");
+    const [appState, setAppState] = useState<TGetDataCategory>({
+        limit: 0,
+        skip: 0,
+        products: [],
+        total: 0
+    });
     return (
         <AppContext.Provider value={{ appState, setAppState }}>
             {children}
@@ -19,7 +24,7 @@ export const AppProvider = ({ children }: { children: ReactElement }) => {
 
 export const useAppState = () => {
 
-    const appState = useContext(AppContext)
-    if (!appState) throw new Error("appState est utilisée sans provider")
-    return { appState }
+    const { appState, setAppState } = useContext(AppContext)
+    if (appState) throw new Error("appState est utilisée sans provider")
+    return { appState, setAppState }
 }

@@ -12,7 +12,7 @@ function SectionHeader({
 }) {
   return (
     <div>
-       <div className=" gap-4 grid grid-cols-2 bg-orange-700 rounded-md justify-center">
+       <div className=" gap-4 grid grid-cols-2 rounded-md justify-center">
           <div className="p-4 ">{title}</div>
           <div className=" relative flex justify-end items-end gap-4">
             <div className="p-4 ">Cart</div>

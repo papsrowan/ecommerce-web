@@ -1,28 +1,31 @@
-"use client"
-import { Divider } from '@nextui-org/react'
-import { useContext } from 'react'
-import ViewCategories from './viewCategories'
+import React, { useState } from 'react'
 import ViewProducts from './viewProducts'
-import { AppContext } from '@/context/appContext'
+import { TGetDataCategory, TProduct } from '@/utils/type'
+import ViewCategories from './viewCategories'
+import { Divider } from '@nextui-org/react'
+import { productService } from '@/services/product'
 
-const SectionProducts = () => {
-    const {appState, setAppState}=useContext(AppContext)
+const SectionProducts = async () => {
+    const { categories, ProductsByCategory } = await getData();
     
-    const handleChangeCategory = (category: string) => {
-        setAppState(category)
-    }
     return (
         <div className=' h-screen gap-5 grid grid-cols-4'>
             <div className=' col-span-3'>
-                <ViewProducts nameCategory={appState} />
+                <ViewProducts Produits={ProductsByCategory}/>
             </div>
             <div>
                 <Divider orientation="vertical" />
                 <span>Categories</span>
-                <ViewCategories onCategorieSelected={handleChangeCategory} />
+                <ViewCategories categories={categories} />
             </div>
         </div>
     )
 }
-
+const getData = async () => {
+    const ProductsByCategory: TGetDataCategory = await productService.getProductsByCategory({
+        name: 'tops',
+    });
+    const categories = await productService.getAllProdutsCategories();
+    return { categories, ProductsByCategory }
+};
 export default SectionProducts
