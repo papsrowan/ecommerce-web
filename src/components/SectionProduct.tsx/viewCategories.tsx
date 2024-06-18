@@ -7,7 +7,7 @@ import { TGetDataCategory } from "@/utils/type";
 import { AppContext } from "@/context/appContext";
 
 export default function ViewCategories({ categories }: { categories: any[] }) {
-    const { appState, setAppState } = useContext(AppContext)
+    const { ListProduct, setListProduct, Category, setCategory } = useContext(AppContext)
 
     return (
         <ListboxWrapper>
@@ -16,11 +16,12 @@ export default function ViewCategories({ categories }: { categories: any[] }) {
                 shouldSelectOnPressUp={false}
                 aria-labelledby="e"
                 onAction={async (key) => {
+                    setCategory(key as string)
                     const ProductsByCategory: TGetDataCategory = await productService.getProductsByCategory({
-                        name: key as string,
+                        name: Category,
                     });
-                    setAppState(ProductsByCategory)
-                    console.log(appState)
+                    setListProduct(ProductsByCategory)
+                    console.log(ListProduct)
                 }}
             >
                 {(categories) => (

@@ -26,8 +26,10 @@ type TGetDataCategory = {
 }
 
 interface MyContextProps {
-    appState: TGetDataCategory | null;
-    setAppState: Dispatch<SetStateAction<TGetDataCategory>>
+    ListProduct: TGetDataCategory | null;
+    setListProduct: Dispatch<SetStateAction<TGetDataCategory>>
+    Category:string
+    setCategory:Dispatch<SetStateAction<string>>
   }
 export type { TProductCart, TProduct,TGetDataCategory, MyContextProps };
 
