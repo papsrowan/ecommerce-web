@@ -15,7 +15,7 @@ const SectionProducts = async () => {
             </div>
             <div>
                 <Divider orientation="vertical" />
-                <span>Categories</span>
+                <span className=' font-bold text-2xl'>Categories</span>
                 <ViewCategories categories={categories} />
             </div>
         </div>

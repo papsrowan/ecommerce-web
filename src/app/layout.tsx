@@ -20,7 +20,6 @@ export default function RootLayout({
       <body className={inter.className}>
         <Theme accentColor="crimson" grayColor="sand" radius="large" scaling="95%">
           <Container>{children}</Container>
-          <ThemePanel />
         </Theme>
       </body>
     </html>

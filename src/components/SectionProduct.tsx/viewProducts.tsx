@@ -1,28 +1,27 @@
 "use client"
 import { AppContext } from '@/context/appContext'
-import { TGetDataCategory } from '@/utils/type'
 import { Card, CardBody, CardFooter, Image } from '@nextui-org/react'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect } from 'react'
 import Skelleton from '../shared/skelleton'
 
 const ViewProducts = () => {
 
     const { ListProduct, Category } = useContext(AppContext)
-    const [loading, setloading] = useState(true)
+    let loading: boolean = true
     useEffect(() => {
         setTimeout(() => {
-            setloading(false)
+            loading = false
         }, 2000);
 
-    }, [Category])
+    }, [ListProduct])
 
     return (
 
         <div>
-            <div className="gap-5 grid grid-cols-2 sm:grid-cols-4">
-                {ListProduct?.products.length != 0? ListProduct?.products.map((item, index) => (
-                    <Card shadow="sm" key={index} isPressable onPress={() => {
-                    }}>
+            <div className="gap-4 grid grid-cols-2 sm:grid-cols-4">
+                {loading ? ListProduct?.products.map((item, index) => (
+                    <Card shadow="sm" key={index} onPress={() => {
+                    }} className=' border border-blue-400 rounded p-5 cursor-pointer hover:bg-blue-200 transition-all ease-in-out'>
                         <CardBody className="overflow-visible p-0">
                             <Image
                                 isZoomed
@@ -39,7 +38,7 @@ const ViewProducts = () => {
                             <p className="text-default-500">{item.price}</p>
                         </CardFooter>
                     </Card>
-                )):Array.from({length:8}).map((_, key)=><Skelleton/>) 
+                )) : Array.from({ length: 8 }).map((_, key) => <Skelleton key={key} />)
                 }
             </div>
         </div>

@@ -12,7 +12,7 @@ import ProductCard from "./productCard";
 const BigProductCarousel = async({ productsTop }: { productsTop: TGetDataCategory }) => {
 
     return (
-        <div>
+        <div className=" border border-blue-400 rounded-[10px]">
             <Swiper
                 modules={[Navigation, Pagination, Autoplay]}
                 spaceBetween={100}
