@@ -1,4 +1,4 @@
-import { TGetDataCategory } from "@/utils/type";
+import { TGetDataCategory, TProduct } from "@/utils/type";
 import { openAxiosInstance } from "./axios";
 
 class ProductsService {
@@ -12,6 +12,11 @@ class ProductsService {
   async getAllProdutsCategories() {
     const response = await openAxiosInstance.get("/products/categories");
     return response.data as any[];
+  }
+
+  async getProductById(id: number) {
+    const response = await openAxiosInstance.get(`/products/${id}`);
+    return response.data as TProduct;
   }
 }
 const productService = new ProductsService();
