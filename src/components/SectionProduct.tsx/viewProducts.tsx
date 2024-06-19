@@ -35,7 +35,8 @@ const ViewProducts = () => {
                                     width="100%"
                                     alt={item.title}
                                     className="w-full object-cover h-[140px]"
-                                    src={item.thumbnail}
+                                    src={`${item.thumbnail}`}
+                                    //https://app.requestly.io/delay/5000/
                                 />
                             </CardBody>
                             <CardFooter className="text-small justify-between">

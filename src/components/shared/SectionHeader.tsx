@@ -1,15 +1,11 @@
-import React from "react";
+"use client"
+import { FaUserCircle } from "react-icons/fa";
 import Cart from "./cart";
-import { FaPersonBooth, FaShoppingBasket, FaUser, FaUserCircle } from "react-icons/fa";
 
 function SectionHeader({
-  abstract,
-  description,
   title,
 }: {
   title: string;
-  abstract?: string;
-  description?: string;
 }) {
   return (
     <div>
