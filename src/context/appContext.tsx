@@ -8,7 +8,19 @@ export const AppContext = createContext<MyContextProps>({
     ListProduct: null,
     setListProduct: () => { },
     Category: "tops",
-    setCategory: () => { }
+    setCategory: () => { },
+    currentUser: {
+        email: '',
+        firstName: '',
+        gender: '',
+        id: 0,
+        image: '',
+        lastName: '',
+        username: '',
+        refreshToken: '',
+        token: ''
+    },
+    setCurrentUser: () => { }
 });
 
 export const AppProvider = ({ children }: { children: ReactElement }) => {
@@ -18,6 +30,17 @@ export const AppProvider = ({ children }: { children: ReactElement }) => {
         products: [],
         total: 0
     });
+    const [currentUser, setCurrentUser] = useState({
+        email: '',
+        firstName: '',
+        gender: '',
+        id: 0,
+        image: '',
+        lastName: '',
+        username: '',
+        refreshToken: '',
+        token: ''
+    })
     const [Category, setCategory] = useState<string>('tops');
 
     useEffect(() => {
@@ -28,18 +51,18 @@ export const AppProvider = ({ children }: { children: ReactElement }) => {
             setListProduct(ProductsByCategory)
         }
         getProducts()
-    }, [])
+
+        const currentUser = localStorage.getItem("user")
+        if (currentUser) {
+
+            setCurrentUser(JSON.parse(currentUser))
+        }
+    }, [Category])
 
     return (
-        <AppContext.Provider value={{ ListProduct, setListProduct, Category, setCategory }}>
+        <AppContext.Provider value={{ ListProduct, setListProduct, Category, setCategory, currentUser, setCurrentUser }}>
             {children}
         </AppContext.Provider>
     );
 };
 
-export const useListProduct = () => {
-
-    const { ListProduct, setListProduct } = useContext(AppContext)
-    if (ListProduct) throw new Error("ListProduct est utilisée sans provider")
-    return { ListProduct, setListProduct }
-}

@@ -8,7 +8,7 @@ export default function ProductCard({ data }: { data: TProduct }) {
     return (
         // <div className="gap-2 grid grid-cols-2 sm:grid-cols-4">
         <div>
-            <Card shadow="lg" isPressable onPress={() => console.log("item pressed")}>
+            <Card shadow="lg" onPress={() => console.log("item pressed")}>
                 <CardBody className="overflow-visible p-0">
                     <Image
                         shadow="sm"

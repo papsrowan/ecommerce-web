@@ -8,8 +8,13 @@ import "swiper/css/scrollbar";
 import { Autoplay, Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from "swiper/react";
 import ProductCard from "./productCard";
+import { useRouter } from "next/navigation";
 
-const BigProductCarousel = async({ productsTop }: { productsTop: TGetDataCategory }) => {
+const BigProductCarousel = async ({ productsTop }: { productsTop: TGetDataCategory }) => {
+    const Router = useRouter()
+    const navigateToDetail = (id: number) => {
+        Router.push(`/product/${id}`)
+    }
 
     return (
         <div className=" border border-blue-400 rounded-[10px]">
@@ -25,11 +30,12 @@ const BigProductCarousel = async({ productsTop }: { productsTop: TGetDataCategor
                 pagination={{ clickable: true }}
                 onSwiper={(swiper) => console.log(swiper)}
                 preventClicksPropagation={true}
-                onSlideChange={() => console.log('slide change')}
+                onSlideChange={() => null}
                 className="mx-auto"
             >
                 {productsTop.products.map((products) => (
-                    <SwiperSlide key={products.id} className=" p-11">
+
+                    <SwiperSlide key={products.id} className=" p-11 cursor-pointer" onClick={() => navigateToDetail(products.id)}>
                         <ProductCard data={products} />
                     </SwiperSlide>
                 ))}

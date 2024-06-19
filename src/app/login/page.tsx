@@ -1,8 +1,10 @@
 "use client"
 
+import { AppContext } from '@/context/appContext';
 import { loginService } from '@/services/login';
+import { User } from '@/utils/type';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 
 const LoginPage = () => {
     const [userNAme, setUserNAme] = useState('');
@@ -18,9 +20,9 @@ const LoginPage = () => {
         }
         setError('');
         // Logique pour rediriger l'utilisateur après connexion réussie
-        loginService.login(userNAme, password).then((user) => {
+        loginService.login(userNAme, password).then(async (user: User) => {
             console.log(user)
-            localStorage.setItem("user", JSON.stringify(user))
+            localStorage.setItem('user', JSON.stringify(user))
             console.log('Connexion réussie avec:', userNAme);
             Router.push('/')
         })

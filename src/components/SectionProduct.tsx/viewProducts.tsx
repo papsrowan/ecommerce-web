@@ -12,19 +12,13 @@ const ViewProducts = () => {
         router.push(`/product/${id}`)
     }
     const { ListProduct, Category } = useContext(AppContext)
-    let loading: boolean = true
-    useEffect(() => {
-        setTimeout(() => {
-            loading = false
-        }, 2000);
-
-    }, [ListProduct])
+    
 
     return (
 
         <div>
             <div className=" gap-4 grid grid-cols-2 sm:grid-cols-4">
-                {loading ? ListProduct?.products.map((item, index) => (
+                {ListProduct?.products.map((item, index) => (
                     <div onClick={() => navigatoDetail(item.id)}>
                         <Card shadow="sm" key={index} className=' border border-blue-400 rounded p-5 cursor-pointer hover:bg-blue-200 transition-all ease-in-out'>
                             <CardBody className="overflow-visible p-0">
@@ -35,7 +29,7 @@ const ViewProducts = () => {
                                     width="100%"
                                     alt={item.title}
                                     className="w-full object-cover h-[140px]"
-                                    src={`${item.thumbnail}`}
+                                    src={item.thumbnail}
                                     //https://app.requestly.io/delay/5000/
                                 />
                             </CardBody>
@@ -46,7 +40,7 @@ const ViewProducts = () => {
                         </Card>
                     </div>
 
-                )) : Array.from({ length: 8 }).map((_, key) => <Skelleton key={key} />)
+                ))
                 }
             </div>
         </div>

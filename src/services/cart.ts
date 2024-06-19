@@ -1,9 +1,9 @@
-import { TProductCart } from "@/utils/type";
+import { TCArt, TCartByUser, TProductCart } from "@/utils/type";
 import { openAxiosInstance } from "./axios";
 
 class CartService {
   //Add product to cart
-  async addProductToCart({ listProducts }: { listProducts: TProductCart[] }) {
+  async addProductToCart( listProducts: TProductCart[] ) {
     const userString = localStorage.getItem("user");
 
     if (!userString) throw new Error("User not logged in");
@@ -13,15 +13,18 @@ class CartService {
       products: listProducts,
     });
 
-    return response;
+    return response.data as TCArt;
   }
   //Get cart
   async getCart() {
-    const userString = localStorage.getItem("user");
-    if (!userString) throw new Error("User not logged in");
-    const user = JSON.parse(userString);
-    const response = await openAxiosInstance.get(`/carts/${user.id}`);
-    return response;
+    if (typeof window !== "undefined") {
+      const userString = localStorage.getItem("user");
+      if (!userString) return null
+      const user = JSON.parse(userString);
+      const response: TCartByUser = await openAxiosInstance.get(`/carts/user/${user.id}`);
+      return response;
+    }
+
   }
 
   //Update product to cart

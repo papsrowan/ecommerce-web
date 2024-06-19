@@ -1,16 +1,32 @@
+"use client"
+import PopCart from '@/components/shared/popCart'
 import SectionHeader from '@/components/shared/SectionHeader'
+import { cartService } from '@/services/cart'
 import { productService } from '@/services/product'
-import { TProduct } from '@/utils/type'
+import { TCArt, TProduct, TProductCart } from '@/utils/type'
 import { Image } from '@nextui-org/react'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaStar } from 'react-icons/fa'
 
-const page = async (ctx: any) => {
+const page = (ctx: any) => {
     const idProduct = ctx.params.productId
     console.log(ctx.params.productId)
-    const product = await getProduct(idProduct)
+    const [product, setProducts] = useState<TProduct>()
+    const [openCartPopUp, setOpenCartPopUp] = useState(false)
+    const handleClose = () => {
+        setOpenCartPopUp(true)
+    }
+    useEffect(() => {
+        getProduct(idProduct).then((value) => {
+
+            setProducts(value)
+        })
+
+    }, [])
+
     return (
         <div className=" h-screen flex flex-col p-10 gap-7">
+            {openCartPopUp ? <PopCart handleClose={() => setOpenCartPopUp(false)} /> : ''}
             <SectionHeader title="Shop cam" />
             <div className="grid grid-cols-2 gap-5 h-96">
                 <div className=' flex items-center justify-center border border-blue-400 rounded-[10px]'>
@@ -18,26 +34,32 @@ const page = async (ctx: any) => {
                         isZoomed
                         shadow="sm"
                         radius="lg"
-                        alt={product.title}
+                        alt={product?.title}
                         className="w-full object-cover h-[100%]"
-                        src={`https://app.requestly.io/delay/5000/${product.thumbnail}`}
+                        src={`${product?.thumbnail}`}
+                    //https://app.requestly.io/delay/5000/
                     />
                 </div>
 
                 <div className="flex flex-col gap-2">
-                    <h1 className=' font-bold text-2xl'>{product.title}</h1>
-                    <p>{product.description}</p>
+                    <h1 className=' font-bold text-2xl'>{product?.title}</h1>
+                    <p>{product?.description}</p>
                     <div className=' flex mt-5 mb-5 items-center gap-10'>
-                        <div className=' flex items-center gap-3 font-bold'>Rating: {product.rating}  <FaStar size={'30px'} className=' text-yellow-500' />
-                        </div> <div className=' flex items-center gap-3 font-bold'>Caterory: {product.category} </div>
-                        <div className=' flex items-center gap-3 font-bold'>Stock: {product.stock} </div>
+                        <div className=' flex items-center gap-3 font-bold'>Rating: {product?.rating}  <FaStar size={'30px'} className=' text-yellow-500' />
+                        </div> <div className=' flex items-center gap-3 font-bold'>Caterory: {product?.category} </div>
+                        <div className=' flex items-center gap-3 font-bold'>Stock: {product?.stock} </div>
                     </div>
                     <div className='  self-center'>
-                        <p className=' text-4xl font-bold'>{product.price} $</p>
+                        <p className=' text-4xl font-bold'>{product?.price} $</p>
                     </div>
                     <div className='grid grid-cols-2 gap-5'>
                         <button className=' bg-blue-500 px-4 py-2 rounded-full text-white hover:bg-blue-600 transition-all ease-in-out'>Buy</button>
-                        <button className=' bg-blue-500 px-4 py-2 rounded-full text-white hover:bg-blue-600 transition-all ease-in-out'>Add Cart</button>
+                        <button onClick={() => {
+                            addProductToCart({ ListProduct: [{ id: idProduct, quantity: 1 }] }).then((value) => {
+                                handleClose()
+                                console.log("cart prduit ajouter",value.products)
+                            })
+                        }} className=' bg-blue-500 px-4 py-2 rounded-full text-white hover:bg-blue-600 transition-all ease-in-out'>Add Cart</button>
                     </div>
                 </div>
             </div>
@@ -47,5 +69,9 @@ const page = async (ctx: any) => {
 async function getProduct(id: number) {
     const reponse: TProduct = await productService.getProductById(id)
     return reponse
+}
+async function addProductToCart({ ListProduct }: { ListProduct: TProductCart[] }) {
+    const response = await cartService.addProductToCart(ListProduct)
+    return response
 }
 export default page
