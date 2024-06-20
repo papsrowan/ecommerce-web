@@ -1,25 +1,19 @@
 "user client"
 import { AppContext } from "@/context/appContext";
-import { useContext, useEffect, useState } from "react";
-import { FaLongArrowAltRight, FaShoppingBasket, FaSignOutAlt } from "react-icons/fa";
+import { useContext, useState } from "react";
+import { FaShoppingBasket, FaSignOutAlt } from "react-icons/fa";
 import PopCart from "./popCart";
-import { cartService } from "@/services/cart";
 const Cart = () => {
     const { setCurrentUser } = useContext(AppContext)
     const [openCartPopUp, setOpenCartPopUp] = useState(false)
-    const [lenghtCart, setlenghtCart] = useState(0)
     const handleClose = () => {
         setOpenCartPopUp(true)
     }
-    cartService.getCart().then((value) => {
-        if (value) {
-            setlenghtCart(value.data.carts.length)
-        }
-    })
+    const {listCart, setListCart} = useContext(AppContext)
     return (
         <div className=" flex justify-center items-center gap-5">
             <div className=" absolute top-2 right-12 rounded-full h-5 w-5 bg-red-600 text-center">
-                <span className=" text-zinc-50 text-sm">{lenghtCart}</span>
+                <span className=" text-zinc-50 text-sm">{listCart.length}</span>
             </div>
             <div className=" text-5xl">
                 <FaShoppingBasket size={"25px"} onClick={handleClose} className=" cursor-pointer" />
@@ -40,6 +34,7 @@ const Cart = () => {
                         token: ''
                     })
 
+                    setListCart([])
                     localStorage.removeItem("user")
                 }} />
 

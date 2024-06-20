@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Theme, Container, ThemePanel } from "@radix-ui/themes";
 import '@radix-ui/themes/styles.css';
+import { AppProvider } from "@/context/appContext";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -19,7 +20,8 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Theme accentColor="crimson" grayColor="sand" radius="large" scaling="95%">
-          <Container>{children}</Container>
+          <Container><AppProvider >
+            {children}</AppProvider></Container>
         </Theme>
       </body>
     </html>

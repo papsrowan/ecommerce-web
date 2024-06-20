@@ -1,10 +1,12 @@
 "use client"
 import { productService } from "@/services/product";
-import { MyContextProps, TGetDataCategory } from "@/utils/type";
-import { createContext, ReactElement, useContext, useEffect, useState } from "react";
+import { MyContextProps, TGetDataCategory, TProduct } from "@/utils/type";
+import { createContext, ReactElement, ReactNode, useContext, useEffect, useState } from "react";
 
 
 export const AppContext = createContext<MyContextProps>({
+    listCart: [],
+    setListCart: () => { },
     ListProduct: null,
     setListProduct: () => { },
     Category: "tops",
@@ -23,7 +25,8 @@ export const AppContext = createContext<MyContextProps>({
     setCurrentUser: () => { }
 });
 
-export const AppProvider = ({ children }: { children: ReactElement }) => {
+export const AppProvider = ({ children }: { children: ReactNode }) => {
+    const [listCart, setListCart] = useState<TProduct[]>([])
     const [ListProduct, setListProduct] = useState<TGetDataCategory>({
         limit: 0,
         skip: 0,
@@ -60,7 +63,7 @@ export const AppProvider = ({ children }: { children: ReactElement }) => {
     }, [Category])
 
     return (
-        <AppContext.Provider value={{ ListProduct, setListProduct, Category, setCategory, currentUser, setCurrentUser }}>
+        <AppContext.Provider value={{ ListProduct, setListProduct, Category, setCategory, currentUser, setCurrentUser, listCart, setListCart }}>
             {children}
         </AppContext.Provider>
     );

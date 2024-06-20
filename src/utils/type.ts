@@ -55,6 +55,8 @@ type TCArt ={
 }
 
 interface MyContextProps {
+    listCart: TProduct[] |[]
+    setListCart: Dispatch<SetStateAction<TProduct[]>>
     ListProduct: TGetDataCategory | null;
     setListProduct: Dispatch<SetStateAction<TGetDataCategory>>
     Category: string

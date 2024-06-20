@@ -21,7 +21,7 @@ class CartService {
       const userString = localStorage.getItem("user");
       if (!userString) return null
       const user = JSON.parse(userString);
-      const response: TCartByUser = await openAxiosInstance.get(`/carts/user/${user.id}`);
+      const response: TCartByUser = await openAxiosInstance.get(`/carts/user/5`);
       return response;
     }
 

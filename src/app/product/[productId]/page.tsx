@@ -1,18 +1,20 @@
 "use client"
 import PopCart from '@/components/shared/popCart'
 import SectionHeader from '@/components/shared/SectionHeader'
-import { cartService } from '@/services/cart'
+import { AppContext } from '@/context/appContext'
 import { productService } from '@/services/product'
-import { TCArt, TProduct, TProductCart } from '@/utils/type'
+import { TProduct } from '@/utils/type'
 import { Image } from '@nextui-org/react'
-import React, { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { FaStar } from 'react-icons/fa'
 
 const page = (ctx: any) => {
     const idProduct = ctx.params.productId
-    console.log(ctx.params.productId)
+    console.log("idProduit", ctx.params.productId)
+    console.log(idProduct)
     const [product, setProducts] = useState<TProduct>()
     const [openCartPopUp, setOpenCartPopUp] = useState(false)
+    const { setListCart, listCart } = useContext(AppContext)
     const handleClose = () => {
         setOpenCartPopUp(true)
     }
@@ -25,6 +27,7 @@ const page = (ctx: any) => {
     }, [])
 
     return (
+
         <div className=" h-screen flex flex-col p-10 gap-7">
             {openCartPopUp ? <PopCart handleClose={() => setOpenCartPopUp(false)} /> : ''}
             <SectionHeader title="Shop cam" />
@@ -55,9 +58,13 @@ const page = (ctx: any) => {
                     <div className='grid grid-cols-2 gap-5'>
                         <button className=' bg-blue-500 px-4 py-2 rounded-full text-white hover:bg-blue-600 transition-all ease-in-out'>Buy</button>
                         <button onClick={() => {
-                            addProductToCart({ ListProduct: [{ id: idProduct, quantity: 1 }] }).then((value) => {
-                                handleClose()
-                                console.log("cart prduit ajouter",value.products)
+                            setListCart((prev) => {
+                                const tempCart = prev
+                                if (product) {
+                                    tempCart.push(product)
+                                    setOpenCartPopUp(true)
+                                }
+                                return tempCart
                             })
                         }} className=' bg-blue-500 px-4 py-2 rounded-full text-white hover:bg-blue-600 transition-all ease-in-out'>Add Cart</button>
                     </div>
@@ -70,8 +77,5 @@ async function getProduct(id: number) {
     const reponse: TProduct = await productService.getProductById(id)
     return reponse
 }
-async function addProductToCart({ ListProduct }: { ListProduct: TProductCart[] }) {
-    const response = await cartService.addProductToCart(ListProduct)
-    return response
-}
+
 export default page
