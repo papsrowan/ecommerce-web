@@ -55,6 +55,8 @@ type TCArt ={
 }
 
 interface MyContextProps {
+    isLoadingProduct: boolean
+    setIsLoadingProduct: Dispatch<SetStateAction<boolean>>
     listCart: TProduct[] |[]
     setListCart: Dispatch<SetStateAction<TProduct[]>>
     ListProduct: TGetDataCategory | null;

@@ -1,6 +1,7 @@
 "use client"
 import PopCart from '@/components/shared/popCart'
 import SectionHeader from '@/components/shared/SectionHeader'
+import Skelleton from '@/components/shared/skelleton'
 import { AppContext } from '@/context/appContext'
 import { productService } from '@/services/product'
 import { TProduct } from '@/utils/type'
@@ -14,6 +15,7 @@ const page = (ctx: any) => {
     console.log(idProduct)
     const [product, setProducts] = useState<TProduct>()
     const [openCartPopUp, setOpenCartPopUp] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
     const { setListCart, listCart } = useContext(AppContext)
     const handleClose = () => {
         setOpenCartPopUp(true)
@@ -22,6 +24,7 @@ const page = (ctx: any) => {
         getProduct(idProduct).then((value) => {
 
             setProducts(value)
+            setIsLoading(false)
         })
 
     }, [])
@@ -33,7 +36,7 @@ const page = (ctx: any) => {
             <SectionHeader title="Shop cam" />
             <div className="grid grid-cols-2 gap-5 h-96">
                 <div className=' flex items-center justify-center border border-blue-400 rounded-[10px]'>
-                    <Image
+                    {!isLoading ? <Image
                         isZoomed
                         shadow="sm"
                         radius="lg"
@@ -41,10 +44,10 @@ const page = (ctx: any) => {
                         className="w-full object-cover h-[100%]"
                         src={`${product?.thumbnail}`}
                     //https://app.requestly.io/delay/5000/
-                    />
+                    /> : <Skelleton />}
                 </div>
 
-                <div className="flex flex-col gap-2">
+                {!isLoading? <div className="flex flex-col gap-2">
                     <h1 className=' font-bold text-2xl'>{product?.title}</h1>
                     <p>{product?.description}</p>
                     <div className=' flex mt-5 mb-5 items-center gap-10'>
@@ -68,7 +71,7 @@ const page = (ctx: any) => {
                             })
                         }} className=' bg-blue-500 px-4 py-2 rounded-full text-white hover:bg-blue-600 transition-all ease-in-out'>Add Cart</button>
                     </div>
-                </div>
+                </div>: <div className=' flex items-center justify-center'><Skelleton/></div> }
             </div>
         </div>
     )

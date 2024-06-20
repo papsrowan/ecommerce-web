@@ -5,6 +5,8 @@ import { createContext, ReactElement, ReactNode, useContext, useEffect, useState
 
 
 export const AppContext = createContext<MyContextProps>({
+    isLoadingProduct: true,
+    setIsLoadingProduct: () => { },
     listCart: [],
     setListCart: () => { },
     ListProduct: null,
@@ -26,6 +28,7 @@ export const AppContext = createContext<MyContextProps>({
 });
 
 export const AppProvider = ({ children }: { children: ReactNode }) => {
+    const [isLoadingProduct, setIsLoadingProduct] = useState<boolean>(true)
     const [listCart, setListCart] = useState<TProduct[]>([])
     const [ListProduct, setListProduct] = useState<TGetDataCategory>({
         limit: 0,
@@ -52,6 +55,9 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
                 name: Category,
             });
             setListProduct(ProductsByCategory)
+
+            setIsLoadingProduct(false)
+
         }
         getProducts()
 
@@ -63,7 +69,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     }, [Category])
 
     return (
-        <AppContext.Provider value={{ ListProduct, setListProduct, Category, setCategory, currentUser, setCurrentUser, listCart, setListCart }}>
+        <AppContext.Provider value={{ ListProduct, setListProduct, Category, setCategory, currentUser, setCurrentUser, listCart, setListCart, setIsLoadingProduct, isLoadingProduct }}>
             {children}
         </AppContext.Provider>
     );

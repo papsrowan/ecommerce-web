@@ -4,7 +4,7 @@ import { productService } from "@/services/product";
 import { useContext, useState } from "react";
 
 export default function ViewCategories({ categories }: { categories: any[] }) {
-    const { ListProduct, setListProduct, Category, setCategory } = useContext(AppContext)
+    const { ListProduct, setListProduct, Category, setCategory, setIsLoadingProduct } = useContext(AppContext)
     const [isSelected, setisSelected] = useState(17)
     return (
         <div className=" flex flex-col gap-5">
@@ -17,6 +17,9 @@ export default function ViewCategories({ categories }: { categories: any[] }) {
                             <li key={idx}
                                 className={idx == isSelected ? "cursor-pointer text-blue-400" : "cursor-pointer "}
                                 onClick={() => {
+                                    setIsLoadingProduct(true)
+                                    setisSelected(idx)
+
                                     productService.getProductsByCategory({
                                         name: Category,
                                     }).then((value) => {
@@ -24,7 +27,6 @@ export default function ViewCategories({ categories }: { categories: any[] }) {
                                         console.log(categorie.name)
                                         setListProduct(value)
                                         console.log(ListProduct)
-                                        setisSelected(idx)
 
                                     });
                                 }}>{categorie.name}</li>

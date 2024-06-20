@@ -1,10 +1,9 @@
 import SectionProducts from "@/components/SectionProduct.tsx/sectionProducts";
 import BigProductCarousel from "@/components/shared/bigProductCarousel";
-import Cart from "@/components/shared/cart";
 import SectionHeader from "@/components/shared/SectionHeader";
 import { productService } from "@/services/product";
 import { TGetDataCategory } from "@/utils/type";
-import { Button, Flex, Text } from "@radix-ui/themes";
+import { Flex, Text } from "@radix-ui/themes";
 
 export default async function Accueil() {
   const productsTop = await getData()

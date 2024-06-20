@@ -2,7 +2,7 @@
 import { AppContext } from '@/context/appContext'
 import { Card, CardBody, CardFooter, Image } from '@nextui-org/react'
 import { useRouter } from 'next/navigation'
-import { useContext, useEffect, useState } from 'react'
+import { useContext } from 'react'
 import Skelleton from '../shared/skelleton'
 
 const ViewProducts = () => {
@@ -11,15 +11,8 @@ const ViewProducts = () => {
     const navigatoDetail = (id: number) => {
         router.push(`/product/${id}`)
     }
-    const { ListProduct, Category } = useContext(AppContext)
-const [isLoading, setisLoading] = useState(true)
-    useEffect(() => {
-      
-    setTimeout(() => {
-        setisLoading(false)
-    }, 5000);
-      
-    }, [Category])
+    const { ListProduct,isLoadingProduct} = useContext(AppContext)
+
     
 
     return (
@@ -27,9 +20,9 @@ const [isLoading, setisLoading] = useState(true)
         <div className=' flex flex-col gap-5'>
             <span className=" text-2xl font-bold">Products in Shop</span>
             <div className=" gap-4 grid grid-cols-2 sm:grid-cols-4">
-                {ListProduct?.products.length != 0 ? ListProduct?.products.map((item, index) => (
+                {!isLoadingProduct ? ListProduct?.products.map((item, index) => (
                     <div onClick={() => navigatoDetail(item.id)}>
-                        <Card shadow="sm" key={index} className=' border border-blue-400 rounded p-5 cursor-pointer hover:bg-blue-200 transition-all ease-in-out'>
+                        <Card shadow="sm" key={index} className=' h-full border border-blue-400 rounded p-5 cursor-pointer hover:bg-blue-200 transition-all ease-in-out'>
                             <CardBody className="overflow-visible p-0">
                                 <Image
                                     isZoomed
@@ -49,7 +42,7 @@ const [isLoading, setisLoading] = useState(true)
                         </Card>
                     </div>
 
-                )) : <Skelleton />}
+                )) : Array.from({length:8}).map((_)=><Skelleton />)}
 
             </div>
         </div>

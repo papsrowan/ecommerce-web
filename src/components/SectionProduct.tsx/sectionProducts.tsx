@@ -1,9 +1,7 @@
-import React, { useState } from 'react'
-import ViewProducts from './viewProducts'
-import { TGetDataCategory, TProduct } from '@/utils/type'
-import ViewCategories from './viewCategories'
-import { Divider } from '@nextui-org/react'
 import { productService } from '@/services/product'
+import { TGetDataCategory } from '@/utils/type'
+import ViewCategories from './viewCategories'
+import ViewProducts from './viewProducts'
 
 const SectionProducts = async () => {
     const { categories, ProductsByCategory } = await getData();
