@@ -1,33 +1,39 @@
 "use client"
 import { AppContext } from "@/context/appContext";
 import { productService } from "@/services/product";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 
 export default function ViewCategories({ categories }: { categories: any[] }) {
     const { ListProduct, setListProduct, Category, setCategory } = useContext(AppContext)
+    const [isSelected, setisSelected] = useState(17)
     return (
-        <ul>
-            {
-                categories.map((categorie, idx) => {
+        <div className=" flex flex-col gap-5">
+            <span className=' font-bold text-2xl'>Categories</span>
+            <ul className=" rounded-lg p-2 shadow shadow-slate-500">
+                {
+                    categories.map((categorie, idx) => {
 
-                    return (
-                        <li key={idx}
-                            className=" cursor-pointer"
-                            onClick={() => {
+                        return (
+                            <li key={idx}
+                                className={idx == isSelected ? "cursor-pointer text-blue-400" : "cursor-pointer "}
+                                onClick={() => {
+                                    productService.getProductsByCategory({
+                                        name: Category,
+                                    }).then((value) => {
+                                        setCategory(categorie.name)
+                                        console.log(categorie.name)
+                                        setListProduct(value)
+                                        console.log(ListProduct)
+                                        setisSelected(idx)
 
-                                productService.getProductsByCategory({
-                                    name: Category,
-                                }).then((value) => {
-                                    setCategory(categorie.name)
-                                    console.log(categorie.name)
-                                    setListProduct(value)
-                                    console.log(ListProduct)
-                                });
-                            }}>{categorie.name}</li>
-                    )
-                })
-            }
-        </ul>
+                                    });
+                                }}>{categorie.name}</li>
+                        )
+                    })
+                }
+            </ul>
+        </div>
+
         // <ListboxWrapper>
         //     <Listbox
         //         items={categories}

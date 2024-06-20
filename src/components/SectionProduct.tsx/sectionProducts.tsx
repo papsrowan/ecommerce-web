@@ -14,7 +14,6 @@ const SectionProducts = async () => {
                 <ViewProducts/>
             </div>
             <div>
-                <span className=' font-bold text-2xl'>Categories</span>
                 <ViewCategories categories={categories} />
             </div>
         </div>

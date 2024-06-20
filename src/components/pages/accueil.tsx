@@ -20,7 +20,6 @@ export default async function Accueil() {
 
       </div>
       <div className=" p-10   flex flex-col gap-5">
-        <span className=" text-2xl font-bold">Products in Shop</span>
         <SectionProducts />
       </div>
     </div>
