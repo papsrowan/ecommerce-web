@@ -16,7 +16,7 @@ function SectionHeader({
   return (
     <div>
       <div className=" gap-4 grid grid-cols-2 rounded-md justify-center bg-blue-400 border">
-        <div className="p-4 font-bold text-2xl text-white">{title}</div>
+        <div className="p-4 font-bold text-2xl text-white"><span onClick={()=>Router.push('/')} className=" cursor-pointer">{title}</span></div>
         <div className=" relative flex justify-end items-end gap-4">
           <div className="p-4 flex gap-2 items-center">{currentUser.firstName}
             {currentUser.image != '' ? <Image

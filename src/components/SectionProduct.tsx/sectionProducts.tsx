@@ -7,8 +7,8 @@ const SectionProducts = async () => {
     const { categories, ProductsByCategory } = await getData();
     
     return (
-        <div className=' h-screen gap-5 grid grid-cols-4'>
-            <div className=' col-span-3'>
+        <div className='gap-5 grid  md:grid-cols-4'>
+            <div className='  md:col-span-3'>
                 <ViewProducts/>
             </div>
             <div>

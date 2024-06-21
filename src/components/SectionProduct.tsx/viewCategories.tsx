@@ -7,7 +7,7 @@ export default function ViewCategories({ categories }: { categories: any[] }) {
     const { ListProduct, setListProduct, Category, setCategory, setIsLoadingProduct } = useContext(AppContext)
     const [isSelected, setisSelected] = useState(17)
     return (
-        <div className=" flex flex-col gap-5">
+        <div className="md:flex md:flex-col md:gap-5  ">
             <span className=' font-bold text-2xl'>Categories</span>
             <ul className=" rounded-lg p-2 shadow shadow-slate-500">
                 {

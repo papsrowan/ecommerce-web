@@ -18,7 +18,7 @@ const PopCart = ({ handleClose }: { handleClose: () => void }) => {
       }
     }} className=' fixed top-0 left-0 h-screen w-screen bg-black/50 z-50 flex items-center justify-center'>
       <div className=' w-1/2 h-1/2 overflow-y-auto bg-white rounded-lg flex flex-col gap-5'>
-        {
+        { listCart.length !=0?
           listCart.map((product) =>
             <div className=" flex flex-col p-10 gap-7">
               <div className="grid grid-cols-2 gap-5">
@@ -48,7 +48,7 @@ const PopCart = ({ handleClose }: { handleClose: () => void }) => {
                 </div>
               </div>
             </div>
-          )
+          ):<div className=' flex items-center justify-center h-[100%]'>Aucun produit dans votre cart</div>
         }
       </div>
 

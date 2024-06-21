@@ -3,13 +3,18 @@ import { AppContext } from "@/context/appContext";
 import { useContext, useState } from "react";
 import { FaShoppingBasket, FaSignOutAlt } from "react-icons/fa";
 import PopCart from "./popCart";
+import { useRouter } from "next/navigation";
 const Cart = () => {
-    const { setCurrentUser } = useContext(AppContext)
+    const { setCurrentUser, currentUser } = useContext(AppContext)
     const [openCartPopUp, setOpenCartPopUp] = useState(false)
+    const Router = useRouter()
     const handleClose = () => {
+        if (currentUser.email == "") {
+            return Router.push('/login')
+        }
         setOpenCartPopUp(true)
     }
-    const {listCart, setListCart} = useContext(AppContext)
+    const { listCart, setListCart } = useContext(AppContext)
     return (
         <div className=" flex justify-center items-center gap-5">
             <div className=" absolute top-2 right-12 rounded-full h-5 w-5 bg-red-600 text-center">
