@@ -26,3 +26,6 @@ Swipper-js - Une bibliohèque javascript pour les slider, diaporama et bien d'au
 Next-Ui - Une bibliotheque pour les composants dans le cas de ce projet les skeleton
 Radix - Un gestionnaire de theme
 
+
+Contributeurs
+ETAME EBOA - Développeur principal
