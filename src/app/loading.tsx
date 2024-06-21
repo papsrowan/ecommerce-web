@@ -6,6 +6,8 @@ const loading = () => {
     <div>
       
       <Skelleton />
+      <Skelleton />
+      <Skelleton />
     </div>
   )
 }
