@@ -5,7 +5,7 @@ Ce projet est une application web développée avec React et Next.js pour créer
 1- Installation
 
 Cloner le dépôt
- .cd nom-du-dépôt
+ .cd ecommerce-web
 
 
 2-Installer les dépendances
@@ -27,5 +27,5 @@ Next-Ui - Une bibliotheque pour les composants dans le cas de ce projet les skel
 Radix - Un gestionnaire de theme
 
 
-Contributeurs
+Contributeur
 ETAME EBOA - Développeur principal
