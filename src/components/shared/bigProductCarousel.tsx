@@ -11,6 +11,7 @@ import ProductCard from "./productCard";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { productService } from "@/services/product";
+import Skelleton from "./skelleton";
 
 const BigProductCarousel = async () => {
     const Router = useRouter()
@@ -18,6 +19,7 @@ const BigProductCarousel = async () => {
         Router.push(`/product/${id}`)
     }
     const [productsTop, setproductsTop] = useState<TGetDataCategory>()
+    const [isIoading, setIsLoading] = useState(true)
     const [windowSize, setWindowSize] = useState({
         width: 0,
         height: 0,
@@ -30,6 +32,7 @@ const BigProductCarousel = async () => {
                 name: "tops",
             });
             setproductsTop(productsTop)
+            setIsLoading(false)
             return productsTop
         };
         // Fonction de gestionnaire de redimensionnement
@@ -56,9 +59,7 @@ const BigProductCarousel = async () => {
 
     return (
         <div className=" border border-blue-400 rounded-[10px]">
-            <div>
-                {windowSize.width}
-            </div>
+            
             <Swiper
                 modules={[Navigation, Pagination, Autoplay]}
                 spaceBetween={50}
@@ -72,12 +73,12 @@ const BigProductCarousel = async () => {
                 preventClicksPropagation={true}
                 onSlideChange={() => null}
             >
-                {productsTop?.products.map((products) => (
+                {!isIoading ? productsTop?.products.map((products) => (
 
                     <SwiperSlide key={products.id} className=" md:p-11" onClick={() => navigateToDetail(products.id)}>
                         <ProductCard data={products} />
                     </SwiperSlide>
-                ))}
+                )):Array.from({length:1}).map((_, idx)=><Skelleton key={idx} />)}
             </Swiper>
         </div>
     );
