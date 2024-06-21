@@ -11,7 +11,7 @@ const ViewProducts = () => {
     const navigatoDetail = (id: number) => {
         router.push(`/product/${id}`)
     }
-    const { ListProduct,isLoadingProduct} = useContext(AppContext)
+    const { ListProduct,isLoadingProduct, Category} = useContext(AppContext)
 
     
 
@@ -20,7 +20,7 @@ const ViewProducts = () => {
         <div className=' flex flex-col gap-5'>
             <span className=" text-2xl font-bold">Products in Shop</span>
             <div className=" gap-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4">
-                {!isLoadingProduct ? ListProduct?.products.map((item, index) => (
+                {!isLoadingProduct ? ListProduct?.products.length !=0? ListProduct?.products.map((item, index) => (
                     <div onClick={() => navigatoDetail(item.id)} key={index}>
                         <Card shadow="sm" key={index} className=' h-full border border-blue-400 rounded p-5 cursor-pointer hover:bg-blue-200 transition-all ease-in-out'>
                             <CardBody className="overflow-visible p-0">
@@ -42,7 +42,7 @@ const ViewProducts = () => {
                         </Card>
                     </div>
 
-                )) : Array.from({length:8}).map((_, idx)=><Skelleton key={idx} />)}
+                )): <div className=' h-full flex items-center justify-center '>Product not found: <span className=' font-bold '>{Category}</span> </div> : Array.from({length:8}).map((_, idx)=><Skelleton key={idx} />)}
 
             </div>
         </div>

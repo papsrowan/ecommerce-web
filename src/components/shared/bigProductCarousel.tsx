@@ -31,8 +31,8 @@ const BigProductCarousel = async () => {
             const productsTop: TGetDataCategory = await productService.getProductsByCategory({
                 name: "tops",
             });
-            setproductsTop(productsTop)
             setIsLoading(false)
+            setproductsTop(productsTop)
             return productsTop
         };
         // Fonction de gestionnaire de redimensionnement
