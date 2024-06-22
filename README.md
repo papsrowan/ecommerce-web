@@ -17,6 +17,10 @@ Pour lancer l'application localement, exécutez la commande suivante :
 
 npm run dev
 
+
+.nom:emilys
+.mot de pass: emilyspass
+
 4-Technologies utilisées
 
 React - Framework de choix pour la construction d'interfaces utilisateur réactives.
