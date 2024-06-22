@@ -15,7 +15,7 @@ export default function ViewCategories({ categories }: { categories: any[] }) {
 
                         return (
                             <li key={idx}
-                                className={idx == isSelected ? "cursor-pointer text-blue-400" : "cursor-pointer "}
+                                className={idx == isSelected ? "cursor-pointer text-white bg-blue-300" : "cursor-pointer "}
                                 onClick={() => {
                                     setIsLoadingProduct(true)
                                     setisSelected(idx)
